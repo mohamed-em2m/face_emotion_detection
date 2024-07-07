@@ -1,0 +1,1 @@
+to face emotion detection we first train cnn model on fer dataset 2013 and get 65% accuracy on test set then we use face detection algorithms cascade, dlib and mtcnn to detect faces then send detected faces to out model to predict the emotion 
