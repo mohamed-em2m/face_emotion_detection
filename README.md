@@ -1,107 +1,82 @@
-Facial Emotion Detection Project
+# Emotion Detection using Deep Learning
 
-This project focuses on detecting human facial emotions in real-time from images, video files, and webcam feeds using various face detection algorithms and a pre-trained deep learning model. The detected emotions are classified into seven categories: angry, disgust, fear, happy, neutral, sad, and surprise.
-Features
+## Overview
+This project implements real-time facial emotion detection using deep learning techniques. It employs TensorFlow, Keras, OpenCV, and dlib to process images and videos, detect faces, and classify emotions using a pre-trained convolutional neural network (CNN).
 
-    Real-time Emotion Detection: Works with webcam feeds, video files, and static images.
+## Features
+- Detects faces in images and videos using dlib and OpenCV's Haar Cascade classifier.
+- Classifies facial expressions into seven categories: Angry, Disgust, Fear, Happy, Neutral, Sad, and Surprise.
+- Utilizes a deep learning model (`fernet (1).h5`) trained on a facial emotion dataset.
+- Supports real-time emotion detection via webcam or video input.
+- Saves processed video with emotion labels.
 
-    Multiple Face Detectors:
+## Installation
+### Prerequisites
+Ensure you have the following installed:
+- Python 3.x
+- TensorFlow
+- Keras
+- OpenCV
+- dlib
+- NumPy
+- Pandas
+- Scikit-learn
+- XGBoost
 
-        dlib's HOG-based Detector
+### Install Dependencies
+```bash
+pip install tensorflow keras opencv-python dlib numpy pandas scikit-learn xgboost seaborn matplotlib
+```
 
-        OpenCV Haar Cascades
+## Usage
+### Detect Emotion in Video
+Run the script to process a video and detect emotions:
+```bash
+python detect_emotion_video.py
+```
+Modify `vid=cv2.VideoCapture(0)` to use a video file instead of a webcam.
 
-        MTCNN (Multi-Task Cascaded Convolutional Networks)
+### Detect Emotion in Image
+Run the script to detect emotion in a static image:
+```bash
+python detect_emotion_image.py
+```
+Replace `frame=cv2.imread("path/to/image.jpg")` with your image file.
 
-    Emotion Classification: Uses a pre-trained TensorFlow/Keras model (fernet.h5) to predict emotions.
+## Model
+The project uses a CNN model trained on facial expressions data. The architecture includes:
+- Convolutional layers (Conv2D)
+- MaxPooling layers
+- Fully connected (Dense) layers
+- Dropout and Batch Normalization
 
-    Visual Output: Bounding boxes and labels around detected faces with emotion-specific colors.
+The model is saved as `fernet (1).h5` and loaded using:
+```python
+model = keras.models.load_model('fernet (1).h5')
+```
 
-Installation
-Dependencies
+## Face Detection Methods
+1. **dlib HOG-based detector**
+2. **OpenCV Haar Cascade classifier**
 
-Ensure the following libraries are installed:
-bash
-Copy
+Example usage:
+```python
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades +'haarcascade_frontalface_default.xml')
+faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
+```
 
-pip install numpy matplotlib pandas seaborn tensorflow scikit-learn xgboost opencv-python dlib mtcnn
+## Output
+Detected faces are marked with rectangles and labeled with predicted emotions. The results can be displayed in real-time or saved as a video file.
 
-Notes:
+## Example Labels and Colors
+```python
+labels = {0:'angry', 1:'disgust', 2:'fear', 3:'happy', 4:'neutral', 5:'sad', 6:'surprise'}
+colors = {0:(0,0,255), 1:(100,0,100), 2:(200,50,123), 3:(0,255,255), 4:(0,255,0), 5:(255,255,0), 6:(255,0,0)}
+```
 
-    dlib: If installation fails, install CMake and a C++ compiler first. On Windows, use:
-    bash
-    Copy
+## Contributions
+Feel free to fork this repository, submit issues, or open pull requests.
 
-    conda install -c conda-forge dlib
+## License
+This project is licensed under the MIT License.
 
-    MTCNN: Requires mtcnn library (pip install mtcnn).
-
-Usage
-1. Emotion Detection in Videos/Webcam
-python
-Copy
-
-# Using dlib's HOG detector
-python main.py --video_path "path/to/video.mp4" --detector dlib
-
-# Using Haar Cascade (webcam)
-python main.py --video_path 0 --detector haar
-
-# Using MTCNN (video file)
-python main.py --video_path "input.mp4" --detector mtcnn
-
-2. Emotion Detection in Images
-python
-Copy
-
-python detect_image.py --image_path "path/to/image.jpg" --detector [dlib|haar|mtcnn]
-
-Arguments:
-
-    --video_path: Path to video file or 0 for webcam.
-
-    --image_path: Path to image file.
-
-    --detector: Face detector algorithm (dlib, haar, or mtcnn).
-
-Project Structure
-Copy
-
-.
-├── main.py               # Main script for video/webcam detection
-├── detect_image.py       # Script for image detection
-├── fernet.h5             # Pre-trained emotion classification model
-├── haarcascade_frontalface_default.xml  # Haar Cascade XML file
-└── README.md
-
-Model Details
-
-    Architecture: Custom CNN trained on FER2013 or similar dataset.
-
-    Input Shape: (48, 48, 1) (grayscale images).
-
-    Output: Probabilities for 7 emotion classes.
-
-Example Output
-
-Emotion Detection Example
-Contributing
-
-    Fork the repository.
-
-    Create a feature branch (git checkout -b feature/your-feature).
-
-    Commit changes (git commit -m 'Add some feature').
-
-    Push to the branch (git push origin feature/your-feature).
-
-    Open a Pull Request.
-
-License
-
-This project is licensed under the MIT License. See LICENSE for details.
-Acknowledgements
-
-    Face detection using dlib, OpenCV, and MTCNN.
-
-    Emotion classification model inspired by FER2013 dataset training.
