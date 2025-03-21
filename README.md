@@ -3,7 +3,7 @@
 ## Overview
 This project implements real-time facial emotion detection using deep learning techniques. It employs TensorFlow, Keras, OpenCV, and dlib to process images and videos, detect faces, and classify emotions using a pre-trained convolutional neural network (CNN).
 <video controls width="600">
-  <source src="videos/emotion3.mp4" type="video/mp4">
+  <source src="emotion3.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 ## Features
