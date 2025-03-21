@@ -4,3 +4,25 @@ numpy
 matplotlib
 opencv-python
 Pillow
+# Core libraries
+tensorflow==2.11.0
+keras==2.11.0
+opencv-python==4.7.0.72
+mtcnn==0.1.1
+dlib
+numpy
+pandas
+matplotlib
+seaborn
+
+# Regularization and model utilities
+scikit-learn
+
+# Callbacks and logging
+tensorboard
+
+# Image processing
+Pillow
+
+# Miscellaneous
+tqdm
