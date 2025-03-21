@@ -1,46 +1,38 @@
+
+
 import cv2
+import torch
+import torchvision.transforms as transforms
+from PIL import Image
 import numpy as np
-from dlib import get_frontal_face_detector
-import keras as k
+import matplotlib.pyplot as plt
 
-# Load the pre-trained model
-model = k.models.load_model('fernet (1).h5')
+# Load pre-trained face detection model from OpenCV
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-# Initialize the HOG detector and video writer
-hog = get_frontal_face_detector()
-force = cv2.VideoWriter_fourcc(*'mp4v')
+def detect_faces(image_path):
+    # Read image
+    img = cv2.imread(image_path)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-# Define emotion labels and colors
-labels = {0: 'angry', 1: 'disgust', 2: 'fear', 3: 'happy', 4: 'neutral', 5: 'sad', 6: 'surprise'}
-colors = {0: (0,0,255), 1: (100,0,100), 2: (200,50,123), 3: (0,255,255), 4: (0,255,0), 5: (255,255,0), 6: (255,0,0)}
+    # Detect faces
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
-# Preprocess image function
-def reshape(img):
-    img = cv2.resize(img, (48, 48))
-    return img.reshape(1, 48, 48, 1)
+    # Draw rectangles around faces
+    for (x, y, w, h) in faces:
+        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 3)
 
-# Load video and set up writer
-vid = cv2.VideoCapture("path/to/your/video.mp4")
-write = cv2.VideoWriter('emotion_output.mp4', force, 25, (int(vid.get(3)), int(vid.get(4))))
+    # Convert image to RGB for displaying in Matplotlib
+    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-frame_count = 0
-while True:
-    ret, frame = vid.read()
-    if not ret:
-        break
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    for block in hog(gray, 1):
-        face_img = gray[block.top():block.bottom(), block.left():block.right()]
-        if face_img.size > 0:
-            img2 = reshape(face_img)
-            pred = model.predict(img2)
-            emotion = labels[np.argmax(pred)]
-            cv2.rectangle(frame, (block.left(), block.top()), (block.right(), block.bottom()), colors[np.argmax(pred)], 3)
-            cv2.putText(frame, emotion, (block.left(), block.top()-15), cv2.FONT_ITALIC, 1, colors[np.argmax(pred)], 3)
-    write.write(frame)
-    frame_count += 1
-    print(f"Processed frame {frame_count}")
+    # Show image
+    plt.imshow(img_rgb)
+    plt.axis('off')
+    plt.show()
 
-write.release()
-vid.release()
-cv2.destroyAllWindows()
+    return len(faces)
+
+if __name__ == "__main__":
+    image_path = "face.jpg"  # Replace with your image path
+    num_faces = detect_faces(image_path)
+    print(f"Detected {num_faces} face(s) in the image.")
