@@ -4,7 +4,7 @@
 This project implements real-time facial emotion detection using deep learning techniques. It employs TensorFlow, Keras, OpenCV, and dlib to process images and videos, detect faces, and classify emotions using a pre-trained convolutional neural network (CNN).
 
 ## Project Demo
-<video src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7065980829142781955?compact=1" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
+<video src="https://media.licdn.com/dms/image/v2/D4D05AQHZ7ukD8hYcZw/videocover-high/videocover-high/0/1684661482787?e=1743202800&v=beta&t=niHGoytycHHOzji4Kx6BxbmKbPbkY7Q5ahPBZxEsWNo" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
 ## Features
 - Detects faces in images and videos using dlib and OpenCV's Haar Cascade classifier.
 - Classifies facial expressions into seven categories: Angry, Disgust, Fear, Happy, Neutral, Sad, and Surprise.
